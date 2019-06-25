@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+    <div class="row text-center vertical-middle-sm">
+    <h1>登录--使用django默认方式</h1>
+
+    {% if form.errors %}
+        <P>你的用户名和密码不匹配，再试下</P>
+    {% endif %}
+
+    <P>输入你的用户名和密码</P>
+    {% if next %}
+        <form class="form-horizontal" action="{% url 'account:user_login' %}?next={{ next }}" method="post">
+    {% else %}
+        <form class="form-horizontal" action="{% url 'account:user_login' %}" method="post">
+    {% endif %}
+
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}" class="col-md-5 control-label" style="color:red">
+                <span class="glyphicon glyphicon-user"></span>Username</label>
+            <div class="col-md-6 text-left">{{ form.username }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}" class="col-md-5 control-label" style="color:blue">
+                <span class="glyphicon glyphicon-floppy-open"></span>Password</label>
+            <div class="col-md-6 text-left">{{ form.password }}</div>
+        </div>
+        <input type="submit" class="btn btn-primary btn-lg" value="Login">
+    </form>
+    </div>
+{% endblock %}
