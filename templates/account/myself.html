@@ -50,9 +50,22 @@
                 <div class="col-md-4 text-right"><span>个人介绍:</span></div>
                 <div class="col-md-8 text-left">{{userinfo.aboutme}}</div>
             </div>
+
+            <a href="{% url 'account:edit_my_information' %}">
+                <button class="btn btn-primary btn-lg">编辑我的信息</button>
+            </a>
         </div>
         <div class="col-md-6">
-            <P>picture</P>
+{#            <P>picture</P>#}
+            {% load staticfiles %}
+            <div style="margin-right:100px">
+                <img src="{ % static 'images/IMG_2416.jpg}" name="user_face" class="img-circle"
+                width="270px" id="my_photo">
+            </div>
+            <div style="margin-right:100px">
+                <button class="btn btn-primary btn-lg" id="upload_image"
+                        onclick="upload_image_layer()">上传我的头像</button>
+            </div>
         </div>
     </div>
 </div>
