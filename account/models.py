@@ -15,6 +15,7 @@ class UserInfo(models.Model):
     profession = models.CharField(max_length=100,blank=True)   # 职业
     address = models.CharField(max_length=100,blank=True)
     aboutme = models.TextField(blank=True)
+    photo = models.ImageField(blank=True)
 
 
     def __str__(self):

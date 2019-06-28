@@ -30,7 +30,7 @@ class UserProfileForm(forms.ModelForm):
 class UserInfoForm(forms.ModelForm):      # 针对UserInfo数据模型的
     class Meta:
         model = UserInfo
-        fields = ('school','company','profession','address','aboutme')
+        fields = ('school','company','profession','address','aboutme','photo')
 
 
 class UserForm(forms.ModelForm):          # 进行修改的
