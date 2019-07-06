@@ -12,7 +12,7 @@
     <div style="margin-left:10px">
         <form class="form-horizontal" action="." method="post">
             {% csrf_token %}
-            <div class="row" style="margin-top:80px;">
+            <div class="row" style="margin-top:100px;">
                 <div class="col-md-2 text-right"><span>标题：</span></div>
                 <div class="col-md-10 text-left">{{ article_post_form.title }}</div>
             </div>
@@ -57,7 +57,9 @@
                     success:function (e)
                     {
                         if (e=='1')
-                        {layer.msg('successful');}
+                        {layer.msg('successful');
+                        location.href='{% url 'article:article_list' %}';
+                        }
                         else if (e=='2')
                         {layer.msg('sorry');}
                         else

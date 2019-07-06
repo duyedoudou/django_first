@@ -12,6 +12,8 @@ urlpatterns = [
     path ('del-column/',views.del_article_column,name='del_article_column'),
     path ('article-post/',views.article_post,name='article_post'),
     path ('article-list/',views.article_list,name='article_list'),
+    path ('del-article/',views.del_article,name='del_article'),
+    path ('redit-article/<int:article_id>/',views.redit_article,name='redit_article'),
 
     re_path('article-detail/(?P<id>\d+)/(?P<slug>[-\w]+)/$',
             views.article_detail,name='article_detail'),
