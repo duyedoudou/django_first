@@ -7,6 +7,7 @@
 {% block content %}
     <div>
     <table class="table table-hover">
+
         <tr>
             <td>序号</td>
             <td>标题</td>
@@ -29,7 +30,9 @@
             </td>
         </tr>
         {% endfor %}
+
     </table>
+    {% include 'paginator.html' %}
     </div>
 {##}
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>

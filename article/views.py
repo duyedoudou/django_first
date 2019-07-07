@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 
 from .models import ArticleColumn,ArticlePost
 from .forms import ArticleColumnForm,ArticlePostForm
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 @login_required(login_url='/account/login/')
 @csrf_exempt
@@ -49,6 +50,8 @@ def del_article_column(request):
     except:
         return HttpResponse("2")
 
+
+
 @login_required(login_url='/account/login')
 @csrf_exempt
 def article_post(request):
@@ -75,8 +78,19 @@ def article_post(request):
 
 @login_required(login_url='/account/login')
 def article_list(request):
-    articles = ArticlePost.objects.filter(author=request.user)
-    return render(request,'article/column/article_list.html',{'articles':articles})
+    article_list = ArticlePost.objects.filter(author=request.user)
+    paginator = Paginator(article_list,7)
+    page = request.GET.get('page')
+    try:
+        current_page = paginator.page(page)
+        articles = current_page.object_list
+    except PageNotAnInteger :
+        current_page = paginator.page(1)
+        articles = current_page.object_list
+    except EmptyPage:
+        current_page = paginator.page(paginator.num_pages)
+        articles = current_page.object_list
+    return render(request,'article/column/article_list.html',{'articles':articles,'page':current_page})
 
 @login_required(login_url='/account/login')
 def article_detail(request,id,slug):
@@ -122,8 +136,8 @@ def redit_article(request,article_id):
             return HttpResponse('1')
         except:
             return HttpResponse('2')
-#
-# #
+
+
 # from django.shortcuts import render, get_object_or_404
 # from django.contrib.auth.decorators import login_required
 # from django.views.decorators.http import require_POST
@@ -215,7 +229,7 @@ def redit_article(request,article_id):
 # @login_required(login_url='/account/login')
 # def article_list(request):
 #     articles_list = ArticlePost.objects.filter(author=request.user)
-#     paginator = Paginator(articles_list, 2)
+#     paginator = Paginator(articles_list, 7)
 #     page = request.GET.get('page')
 #     try:
 #         current_page = paginator.page(page)
@@ -271,37 +285,37 @@ def redit_article(request,article_id):
 #             return HttpResponse("2")
 #
 #
-# # @login_required(login_url='/account/login')
-# # @csrf_exempt
-# # def article_tag(request):
-# #     if request.method == "GET":
-# #         article_tags = ArticleTag.objects.filter(author=request.user)
-# #         article_tag_form = ArticleTagForm()
-# #         return render(request, "article/tag/tag_list.html",
-# #                       {"article_tags": article_tags, "article_tag_form": article_tag_form})
-# #
-# #     if request.method == "POST":
-# #         tag_post_form = ArticleTagForm(data=request.POST)
-# #         if tag_post_form.is_valid():
-# #             try:
-# #                 new_tag = tag_post_form.save(commit=False)
-# #                 new_tag.author = request.user
-# #                 new_tag.save()
-# #                 return HttpResponse("1")
-# #             except:
-# #                 return HttpResponse("the data cannot be save.")
-# #         else:
-# #             return HttpResponse("sorry, the form is not valid.")
-# #
-# #
-# # @login_required(login_url='/account/login')
-# # @require_POST
-# # @csrf_exempt
-# # def del_article_tag(request):
-# #     tag_id = request.POST['tag_id']
-# #     try:
-# #         tag = ArticleTag.objects.get(id=tag_id)
-# #         tag.delete()
-# #         return HttpResponse("1")
-# #     except:
-# #         return HttpResponse("2")
+# @login_required(login_url='/account/login')
+# @csrf_exempt
+# def article_tag(request):
+#     if request.method == "GET":
+#         article_tags = ArticleTag.objects.filter(author=request.user)
+#         article_tag_form = ArticleTagForm()
+#         return render(request, "article/tag/tag_list.html",
+#                       {"article_tags": article_tags, "article_tag_form": article_tag_form})
+#
+#     if request.method == "POST":
+#         tag_post_form = ArticleTagForm(data=request.POST)
+#         if tag_post_form.is_valid():
+#             try:
+#                 new_tag = tag_post_form.save(commit=False)
+#                 new_tag.author = request.user
+#                 new_tag.save()
+#                 return HttpResponse("1")
+#             except:
+#                 return HttpResponse("the data cannot be save.")
+#         else:
+#             return HttpResponse("sorry, the form is not valid.")
+#
+#
+# @login_required(login_url='/account/login')
+# @require_POST
+# @csrf_exempt
+# def del_article_tag(request):
+#     tag_id = request.POST['tag_id']
+#     try:
+#         tag = ArticleTag.objects.get(id=tag_id)
+#         tag.delete()
+#         return HttpResponse("1")
+#     except:
+#         return HttpResponse("2")
