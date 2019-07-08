@@ -13,7 +13,7 @@ urlpatterns = [
     path('password-change/',
          auth_views.PasswordChangeView.as_view(
              template_name='account/password_change_form.html',
-             success_url='/account/password-change-done/'),  # 在这个account/password-change-done/的引号里多输入了一个空格，网址就错了，显示%20
+             success_url='/account/password-change-done/'),  # 在这个引号里多输入了一个空格，网址就错了，显示%20
          name='password_change'),
     path('password-change-done/',  # 最后的/不要忘了
          auth_views.PasswordChangeDoneView.as_view(
