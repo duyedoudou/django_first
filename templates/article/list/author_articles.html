@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}articles{% endblock %}
+
+{% block content %}
+    <div class="row text-center vertical-middle-sm">
+    <h1>阅读是进步的阶梯</h1>
+    </div>
+    <div class="container">
+        <div class="col-md-8">
+            {% for article in articles %}
+            <div class="list-group">
+                <a href="{{ article.get_url_path }}" class="list-group-item active">
+                    <h4 class="list-group-item-heading">{{ article.title }}</h4>
+                </a>
+                <P class="list-group-item-text">作者：
+                    <a href="{% url 'article:author_articles' article.author.username %}">{{ article.author.username }}</a></P>
+                <P class="list-group-item-text">概要：{{ article.body | slice:'70' | linebreaks }}</P>
+            </div>
+            {% endfor %}
+        {% include 'paginator.html' %}
+        </div>
+
+
+        <div class="col-mn-4">
+            <div>
+                {% if userinfo.photo %}
+                <img src="{{ userinfo.photo | striptags }}" class="img-circle" id="my_photo" name="user_face" style="width:300px">
+                {% else %}
+                <img src="{% static 'images/newton.jpg' %}" class="img-circle" id="my_photo" name="user_face" style="width:300px">
+                {% endif %}
+            </div>
+
+        <div>
+            <p>{{ user.username }}</p>
+            {% if userinfo %}
+            <p>{{ userinfo.company }}</p>
+            <p>{{ userinfo.aboutme }}</p>
+            {% else %}
+            <p>太懒了，啥也没写</p>
+            {% endif %}
+        </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -11,9 +11,11 @@
         <div class="list-group">
             <a href="{{ article.get_url_path }}" class="list-group-item active">
                 <h4 class="list-group-item-heading">{{ article.title }}</h4>
-                <P class="list-group-item-text">作者：{{ article.author.username }}</P>
-                <P class="list-group-item-text">概要：{{ article.body | slice:'70' | linebreaks }}</P>
             </a>
+                <P class="list-group-item-text">作者：
+                    <a href="{% url 'article:author_articles' article.author.username %}">{{ article.author.username }}</a></P>
+                <P class="list-group-item-text">概要：{{ article.body | slice:'70' | linebreaks }}</P>
+
         </div>
         {% endfor %}
     {% include 'paginator.html' %}
