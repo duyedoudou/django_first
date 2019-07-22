@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
-
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,unique=True)
@@ -12,6 +10,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return 'user {}'.format(self.user.username)
+
 
 # 创建个人信息相关的数据模型类
 class UserInfo(models.Model):

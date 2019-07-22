@@ -23,5 +23,6 @@ urlpatterns = [
     path('account/',include(('account.urls','account'),namespace='account')),
    # path('account/',include('account.urls',namespace='account')),
     path('article/',include(('article.urls','article'),namespace='article')),
-    path('home/',TemplateView.as_view(template_name='home.html'),name='home'),
+    path('home/', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('course/', include('course.urls', namespace='course')),
 ]

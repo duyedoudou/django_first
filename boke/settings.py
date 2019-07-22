@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'account',
     'article',
+    'course',
 ]
 
 MIDDLEWARE = [
@@ -132,11 +133,15 @@ LOGIN_URL = '/account/login/'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_USER = '18451391106@163.com'
 EMAIL_HOST_PASSWORD = 'dy950816'         # 此处是用的是授权码
+# EMAIL_HOST_PASSWORD = '184513'         # 此处是用的是授权码
 EMAIL_POST = 25
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = '18451391106@163.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
+
