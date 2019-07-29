@@ -1,25 +1,27 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}blog titles {% endblock %}
 
 {% block content %}
 <div class="row text-center vertical-middle-sm">
-    <h1>我的博客</h1>
+    <h1>~~愿望清单~~</h1>
 </div>
 <div class="row">
     <div class="col-xs-12 col-md-8">
     <ul>
     {% for blog in blogs %}
-        <li><a href="{{ blog.id }}">{{ blog.title }}</li>
+        <li><a href="{{ blog.id }}">{{ blog.title }}</a></li>
     {% endfor %}
     </ul>
+
     </div>
 
     <div class="col-xs-6 col-md-4">
-        <h2>广告</h2>
-        <p>跟老七学：www.itdiffer.com</p>
+        <h2>看我眼神行事⤵️</h2>
+        <p>小红书导航：<a href="https://www.xiaohongshu.com/explore">https://www.xiaohongshu.com/explore</a></p>
         <!-- <img width="200px" src="https://raw.githubuserecontent.com/qiwsir/DjangoPracticeProject/master/python-book2.png"> -->
-        <img width="200px" src="https://img3.doubanio.com/view/subject/l/public/s28504762.jpg">
+        <img  width="350px" src="{% static '/images/小郑.JPG' %}">
     </div>
 </div>
 {% endblock %}

@@ -1,11 +1,24 @@
 ]{% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}about {% endblock %}
 
 {% block content %}
     <div class="container">
-    <h1 class="text-center">欢迎</h1>
-    <p class="text-center">这个网站的描述我还没想好。</p>
+    <h3 class="text-center">关于本站</h3>
+        <br>
+    <p class="text-center">本站当然是用来晒对象的啦~~~啦</p>
     </div>
+     <div class="text-center">
+
+        <div class="row">
+        <img width="35px" src="{% static 'images/心上人2.jpeg' %}">
+        <img width="35px" src="{% static 'images/眼前人是心上人.jpeg' %}">
+        <img width="35px" src="{% static 'images/心上人3.jpeg' %}">
+        <img width="35px" src="{% static 'images/心上人4.jpeg' %}">
+
+        </div>
+    </div>
+
 
 {% endblock %}
