@@ -26,3 +26,4 @@ urlpatterns = [
     path('home/', TemplateView.as_view(template_name='home.html'), name='home'),
     path('course/', include('course.urls', namespace='course')),
 ]
+# path ('blog/',include('blog.urls','blog'))

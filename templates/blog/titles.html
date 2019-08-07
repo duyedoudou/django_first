@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}blog titles {% endblock %}
+{% block title %}博客文章标题 {% endblock %}
 
 {% block content %}
-<div class="row text-center vertical-middle-sm">
-    <h1>~~愿望清单~~</h1>
-</div>
+{#<div class="row text-center vertical-middle-sm">#}
+{#    <h1>~~愿望清单~~</h1>#}
+{#</div>#}
 <div class="row">
     <div class="col-xs-12 col-md-8">
-    <ul>
-    {% for blog in blogs %}
-        <li><a href="{{ blog.id }}">{{ blog.title }}</a></li>
-    {% endfor %}
-    </ul>
+    <div class="row text-center vertical-middle-sm">
+
+        <h1>~~愿望清单~~</h1>
+        <ul>
+        {% for blog in blogs %}
+            <li><a href="{{ blog.id }}">{{ blog.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
 
     </div>
 
