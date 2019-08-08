@@ -1,10 +1,20 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
-{% block title %} Logout {% endblock %}
+{% block title %} 退出登录 {% endblock %}
 
 {% block content %}
-<div class="row text-center vertical-middle-sm">
-    <p>你已经登出了</p>
+<div class=" text-center ">
+
+{##}
+{#    <div class="row">#}
+{#    <a class="navbar-brand" href="{% url 'account:user_login' %}">#}
+{#        <img  width="200px" src="{% static '/images/重新登录用图.png' %}">#}
+{#    </a>#}
+{#    </div>#}
+
+    <img  width="200px" src="{% static '/images/重新登录用图.png' %}">
+    <p style="font-size:30px">你已经退出登录了</p>
     <P>你可以再次<a href="{% url 'account:user_login' %}">登录</a></P>
 </div>
 {% endblock %}

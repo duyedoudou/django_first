@@ -9,6 +9,7 @@ from django.urls import reverse
 
 # Create your views here.
 
+
 def user_login(request):
     if request.method =='POST':
         login_form = LoginForm(request.POST)   # 填写了用户和密码的提交
@@ -48,7 +49,9 @@ def register(request):
         return render(request,"account/register.html",
                       {"form":user_form,"profile":userprofile_form})
 
-@login_required()
+
+@login_required()    # 判断用户是否登陆
+# 个人信息
 def myself(request):
     userprofile = UserProfile.objects.get(user=request.user) \
         if hasattr(request.user, 'userprofile') \
@@ -60,6 +63,7 @@ def myself(request):
                   {"user":request.user,
                    "userinfo":userinfo,
                    "userprofile":userprofile})
+
 
 @login_required(login_url='/account/login')
 def myself_edit(request):

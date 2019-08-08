@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
+# 用户增增的数据模型
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,unique=True)
     birth = models.DateField(blank=True,null=True)

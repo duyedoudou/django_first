@@ -8,13 +8,16 @@ from .models import ArticleColumn,ArticlePost
 from .forms import ArticleColumnForm,ArticlePostForm
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
+
+# 增加栏目
 @login_required(login_url='/account/login/')
-@csrf_exempt
+@csrf_exempt                                     # 加装饰器也是解决遇到CSRF问题的一种方法
 def article_column(request):
     if request.method == 'GET':
         columns = ArticleColumn.objects.filter(user=request.user)
         column_form = ArticleColumnForm
         return render(request,'article/column/article_column.html',{'columns':columns,'column_form':column_form})
+
     if request.method == 'POST':
         column_name = request.POST['column']
         columns = ArticleColumn.objects.filter(user_id=request.user.id,column=column_name)
@@ -24,8 +27,10 @@ def article_column(request):
             ArticleColumn.objects.create(user=request.user,column=column_name)
             return HttpResponse('1')
 
+
+# 修改栏目名称
 @login_required(login_url='/account/login')
-@require_POST
+@require_POST    # 只接受通过POST提交的数据
 @csrf_exempt
 def rename_article_column(request):
     column_name = request.POST["column_name"]
@@ -38,6 +43,8 @@ def rename_article_column(request):
     except:
         return HttpResponse("0")
 
+
+# 删除栏目
 @login_required(login_url='/account/login')
 @require_POST
 @csrf_exempt
@@ -51,7 +58,7 @@ def del_article_column(request):
         return HttpResponse("2")
 
 
-
+# 文章发布
 @login_required(login_url='/account/login')
 @csrf_exempt
 def article_post(request):
@@ -76,6 +83,8 @@ def article_post(request):
                       {'article_post_form':article_post_form,
                        'article_columns':article_columns})
 
+
+# 文章标题列表
 @login_required(login_url='/account/login')
 def article_list(request):
     article_list = ArticlePost.objects.filter(author=request.user)
@@ -92,6 +101,8 @@ def article_list(request):
         articles = current_page.object_list
     return render(request,'article/column/article_list.html',{'articles':articles,'page':current_page})
 
+
+# 文章详情
 @login_required(login_url='/account/login')
 def article_detail(request,id,slug):
     article = get_object_or_404(ArticlePost,id=id,slug=slug)

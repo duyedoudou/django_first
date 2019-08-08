@@ -128,8 +128,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,"STATIC"),
 )
 
-LOGIN_REDIRECT_URL = '/home/'
-LOGIN_URL = '/account/login/'
+LOGIN_REDIRECT_URL = '/home/'  # 登陆后重定向的位置
+LOGIN_URL = '/account/login/'  # 修改默认的登录页面，跳转到此处
 
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_USER = '18451391106@163.com'

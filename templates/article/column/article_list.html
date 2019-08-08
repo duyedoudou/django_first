@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block title %} articles list{% endblock %}
+{% block title %} 文章列表 {% endblock %}
 
 {% block content %}
     <div class="col-md-10">
@@ -18,6 +18,7 @@
         <tr id="{{ article.id }}">
             <td>{{ forloop.counter }}</td>
             <td><a href="{{ article.get_absolute_url }}">{{ article.title }}</a> </td>
+{#            <td><a href="{% url 'article:article_list' %}">{{ article.title }}</a> </td>#}
             <td>{{ article.column }}</td>
 {#            <td>---</td>#}
             <td>

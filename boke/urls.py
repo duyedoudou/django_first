@@ -19,10 +19,12 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blog/', include(('blog.urls','blog'),namespace='blog')),
-    path('account/',include(('account.urls','account'),namespace='account')),
+    path('blog/', include('blog.urls',namespace='blog')),
+    path('account/',include('account.urls',namespace='account')),
+    # path('account/',include(('account.urls','account'),namespace='account')),
    # path('account/',include('account.urls',namespace='account')),
-    path('article/',include(('article.urls','article'),namespace='article')),
+    path('article/',include('article.urls',namespace='article')),
+    # path('article/',include(('article.urls','article'),namespace='article')),
     path('home/', TemplateView.as_view(template_name='home.html'), name='home'),
     path('course/', include('course.urls', namespace='course')),
 ]

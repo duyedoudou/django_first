@@ -2,13 +2,15 @@
 
 {% load staticfiles %}
 
-{% block title %} register user {% endblock %}
+{% block title %} 用户注册 {% endblock %}
 
 {% block content %}
     <div class="row text-center vertical-middle-sm">
-    <h1>注册</h1>
-    <P>你要是用户，请<strong><a href="{% url 'account:user_login' %}">登录</a> </strong></P>
-    <p>或者注册。</p>
+    <h1>~~注册~~</h1>
+        <br>
+        <br>
+    <P>如果亲已经注册过了，请直接<strong><a href="{% url 'account:user_login' %}" style="font-size:20px">登录</a> </strong></P>
+    <p>不然的话，要先注册~~</p>
     <form class="form-horizontal" action="." method="post">
         {% csrf_token %}
         <div class="form-group">

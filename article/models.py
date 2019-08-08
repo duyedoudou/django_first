@@ -18,6 +18,7 @@ class ArticleColumn(models.Model):
     def __str__(self):
         return self.column
 
+
 # 创建文章的数据模型对象
 class ArticlePost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='article')
