@@ -18,9 +18,12 @@ urlpatterns = [
     re_path('article-detail/(?P<id>\d+)/(?P<slug>[-\w]+)/$',
             views.article_detail,name='article_detail'),
 
-    path ('list-article-titles/',list_views.article_titles,name='article_titles'),
+    path ('list-article-titles/',list_views.article_titles,name='article_titles'),  # 和下下个path调用同一个视图函数，但是path的name不一样
+
     path ('article-content/<int:id>/<slug:slug>/',list_views.article_detail,name='article_content'),
-    path ('list-article-titles/<username>/',list_views.article_titles,name='author_articles'),
+
+    path ('list-article-titles/<username>/',list_views.article_titles,name='author_articles'), # 这是下下个path
+
     path ('like-article/',list_views.like_article,name='like_article'),
 
 ]

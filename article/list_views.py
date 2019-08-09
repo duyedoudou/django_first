@@ -12,9 +12,10 @@ import redis
 from django.conf import settings
 from .forms import CommentForm
 
+# 建立和redis数据库的连接
 r = redis.StrictRedis(host=settings.REDIS_HOST,port=settings.REDIS_PORT,db=settings.REDIS_DB)
 
-
+# 文章列表
 def article_titles(request,username=None):
     if username:
         user = User.objects.get(username=username)
@@ -26,7 +27,8 @@ def article_titles(request,username=None):
             userinfo = None
     else:
         articles_title = ArticlePost.objects.all()
-    paginator = Paginator(articles_title,7)
+
+    paginator = Paginator(articles_title,9)
     page = request.GET.get('page')
     try:
         current_page = paginator.page(page)
@@ -46,31 +48,41 @@ def article_titles(request,username=None):
                   {'articles':articles,'page':current_page})
 
 
+# 文章展示
 def article_detail(request,id,slug):
     article = get_object_or_404(ArticlePost,id=id,slug=slug)
-    total_views = r.incr('article:{}:views'.format(article.id))  # 显示文章阅读次数
-    r.zincrby('article_ranking',1,article.id)
+    total_views = r.incr('article:{}:views'.format(article.id))   # 显示文章阅读次数
+    # total_views = r.incr('{}'.format(article.id))   # 显示文章阅读次数
 
+   # 实现最热文章
+    r.zincrby('article_ranking',1,article.id)
     article_ranking = r.zrange('article_ranking',0,-1,desc=True)[:10]
     article_ranking_ids = [int(id) for id in article_ranking]
     most_viewed = list(ArticlePost.objects.filter(id__in=article_ranking_ids))
     most_viewed.sort(key=lambda x: article_ranking_ids.index(x.id))
 
+
+    # 实现文章评论
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.article = article
+            new_comment.commentator = request.user.username         # 想不出来
             new_comment.save()
 
     else:
         comment_form = CommentForm()
 
 
+
     return render(request,'article/list/article_content.html',
                   {'article':article,'total_views':total_views,'most_viewed':most_viewed,'comment_form':comment_form})
+                  # {'article':article,'total_views':total_views,'most_viewed':most_viewed,})
 
 
+
+# 给文章点赞
 @csrf_exempt
 @require_POST
 @login_required(login_url='/account/login/')

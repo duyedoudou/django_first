@@ -3,7 +3,7 @@
 
 启动：python manage.py runserver
 
-
+认知误区：写在path里的url不一定非得出现在浏览器的地址栏里，对于弹窗也可能调用这个url。因此说，这个url是一个引线，引出要执行的函数，继而进行下一步操作，（如render返回一个网页，或者返回一个Httpresponse）。
 
 ### 远程部署记录：
 

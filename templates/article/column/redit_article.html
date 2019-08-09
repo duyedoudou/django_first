@@ -2,17 +2,18 @@
 
 {% load staticfiles %}
 
-{% block title %} article column{% endblock %}
+{% block title %} 修改:{{ article.title }} {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'editor/css/style.css' %}">
 <link rel="stylesheet" href="{% static 'editor/css/editormd.css' %}">
-<div class="container">
-<div class="col-md-10">
-<div style="margin-left:10px">
+{#<div class="container">#}
+{#<div class="col-md-10">#}
+{#<div style="margin-left:10px">#}
+<div>
     <form class="form-horizontal" action="." method="post">
         {% csrf_token %}
-        <div class="row" style="margin-top:100px;">
+        <div class="row" style="margin-top:10px;">
             <div class="col-md-2 text-right"><span>标题：</span></div>
             <div class="col-md-10 text-left">{{ this_article_form.title }}</div>
         </div>
@@ -31,6 +32,28 @@
                 </select>
             </div>
         </div>
+{##}
+{#        <div class="row" >#}
+{#            <ul class="nav navbar-nav" role="navigation" >#}
+{#                <li><span>标题：</span></li>#}
+{#                <li>{{ this_article_form.title }}</li>#}
+{#            </ul>#}
+{#        <br>#}
+{#            <ul class="nav navbar-nav" role="navigation" >#}
+{#                <li><span>栏目：</span></li>#}
+{#                <li>#}
+{#                    <select id="which_column">#}
+{#                    {% for column in article_columns %}#}
+{#                        {% if column.column == this_article_column.column %}#}
+{#                            <option value="{{column.id}}" selected="selected">{{column.column}} </option>#}
+{#                        {% else %}#}
+{#                            <option value="{{column.id}}">{{column.column}}</option>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </div>#}
 
 
         <div class="row" style="margin-top:10px;">
@@ -49,8 +72,8 @@
     </form>
 </div>
 
-</div>
-</div>
+{#</div>#}
+{#</div>#}
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/editormd.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
@@ -76,6 +99,7 @@ function redit_article(){
     $.ajax(
                 {
                     url:'{% url 'article:redit_article' article.id %}',
+                    {#url:'{% url 'article:article_post'  %}',#}   <!--这样就成了发布新文章了-->
                     type:'POST',
                     data:{'title':title,'body':body,'column_id':column_id},
                     success:function (e)

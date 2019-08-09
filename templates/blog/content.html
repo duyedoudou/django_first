@@ -6,20 +6,60 @@
 {% block content %}
 
 <div class="row">
+{#    <div class="col-xs-12 col-md-8">#}
+{#        <div class="row text-center vertical-middle-sm">#}
+{#        <h1>{{ article.title }}</h1>#}
+{#        <p class="text-center">#}
+{#            <span>{{ article.author.username }}</span>#}
+{#            <span style="margin-left:20px">{{ article.publish }}</span>#}
+{#        </p>#}
+{#        </div>#}
+{##}
+{#        <div class=" text-center">#}
+{#        <p>{{ article.body }}</p>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+
+{#    下方为展示为md格式#}
+
     <div class="col-xs-12 col-md-8">
-        <div class="row text-center vertical-middle-sm">
+    <header>
         <h1>{{ article.title }}</h1>
-        <p class="text-center">
-            <span>{{ article.author.username }}</span>
-            <span style="margin-left:20px">{{ article.publish }}</span>
-        </p>
-        </div>
+        <p>{{ user.name }}</p>
+    </header>
 
-        <div class=" text-center">
-        <p>{{ article.body }}</p>
+    <link rel="stylesheet" href="{% static 'editor/css/editormd.preview.css' %}" />
+        <div id="editormd-view" >
+            <textarea id="append-test" style="display:none;">
+{{ article.body }}
+            </textarea>
         </div>
-
     </div>
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'editor/lib/marked.min.js' %}"></script>
+    <script src="{% static 'editor/lib/prettify.min.js' %}"></script>
+    <script src="{% static 'editor/lib/raphael.min.js' %}"></script>
+    <script src="{% static 'editor/lib/underscore.min.js' %}"></script>
+    <script src="{% static 'editor/lib/sequence-diagram.min.js' %}"></script>
+    <script src="{% static 'editor/lib/flowchart.min.js' %}"></script>
+    <script src="{% static 'editor/lib/jquery.flowchart.min.js' %}"></script>
+    <script src="{% static 'editor/editormd.js' %}"></script>
+
+    <script type="text/javascript">
+    $(function(){
+        editormd.markdownToHTML('editormd-view',{
+            htmlDecode :'style,script,iframe',
+            emoji      :true,
+            taskList   :true,
+            tex        :true,
+            flowChart  :true,
+            sequenceDiagram:true,
+        });
+        }
+    );
+    </script>
 
     <div class="col-xs-6 col-md-4">
         <h2>看我眼神行事⤵️</h2>

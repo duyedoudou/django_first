@@ -12,8 +12,8 @@ class ArticlePostForm(forms.ModelForm):
         model = ArticlePost
         fields = ('title','body')
 
-
+# 文章评论
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('commentator','body',)
+        fields = ('commentator','body')

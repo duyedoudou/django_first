@@ -42,7 +42,8 @@ def register(request):
             # return HttpResponse("successfully.")
             return HttpResponseRedirect(reverse('account:user_login'))
         else:
-            return HttpResponse("sorry,你不能注册.")
+            # return HttpResponse("sorry,你不能注册.")
+            return render(request, "account/illegal_register.html")
     else:
         user_form = RegistrationForm()
         userprofile_form = UserProfileForm()

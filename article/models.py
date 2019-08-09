@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.urls import reverse
 from slugify import slugify
 
+# 栏目
 class ArticleColumn(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='article_column')
     column = models.CharField(max_length=200)
@@ -19,7 +20,7 @@ class ArticleColumn(models.Model):
         return self.column
 
 
-# 创建文章的数据模型对象
+# 文章的数据模型对象
 class ArticlePost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='article')
     title = models.CharField(max_length=200)
@@ -28,7 +29,7 @@ class ArticlePost(models.Model):
     body = models.TextField()
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
-
+    # 新增关于点赞
     users_like = models.ManyToManyField(User,related_name='articles_like',blank=True)
 
 
@@ -50,6 +51,8 @@ class ArticlePost(models.Model):
         return reverse('article:article_content',args=[self.id,self.slug])
 
 
+
+# 文章的评论模型
 class Comment(models.Model):
     article = models.ForeignKey(ArticlePost,on_delete=models.CASCADE,related_name='comments')
     body = models.TextField()

@@ -5,7 +5,7 @@
 {% block title %}articles{% endblock %}
 
 {% block content %}
-    <div class="row text-center vertical-middle-sm">
+    <div class="row text-center vertical-middle-sm col-md-8">
     <h1>阅读是进步的阶梯</h1>
     </div>
     <div class="container">
@@ -24,24 +24,26 @@
         </div>
 
 
-        <div class="col-mn-4">
+        <div class="col-md-4 " style="position:fixed ;right:-30px; top:100px;">  <!--使头像和介绍固定在此处-->
             <div>
                 {% if userinfo.photo %}
                 <img src="{{ userinfo.photo | striptags }}" class="img-circle" id="my_photo" name="user_face" style="width:300px">
                 {% else %}
-                <img src="{% static 'images/newton.jpg' %}" class="img-circle" id="my_photo" name="user_face" style="width:300px">
+                <img src="{% static 'images/avatar.png' %}" class="img-circle" id="my_photo" name="user_face" style="width:300px">
                 {% endif %}
             </div>
 
-        <div>
-            <p>{{ user.username }}</p>
-            {% if userinfo %}
-            <p>{{ userinfo.company }}</p>
-            <p>{{ userinfo.aboutme }}</p>
-            {% else %}
-            <p>太懒了，啥也没写</p>
-            {% endif %}
-        </div>
+            <div>
+            <br>
+                <p>用户名：{{ user.username }}</p>
+                {% if userinfo.company %}
+                <p>公司：{{ userinfo.company }}</p>
+                {% elif userinfo.aboutme %}
+                <p>自我介绍：{{ userinfo.aboutme }}</p>
+                {% else %}
+                <p>太懒了，没有自我介绍，也不愿意透漏公司~</p>
+                {% endif %}
+            </div>
 
         </div>
 

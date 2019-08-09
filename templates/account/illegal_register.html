@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} 非法注册 {% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <br>
+    <h1>你的注册不合法</h1>
+        <br>
+        <br>
+        <P>请点击<a href="{% url 'account:user_register' %}">重新注册</a></P>
+    </div>
+{% endblock %}

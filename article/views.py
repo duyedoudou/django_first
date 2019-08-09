@@ -88,7 +88,7 @@ def article_post(request):
 @login_required(login_url='/account/login')
 def article_list(request):
     article_list = ArticlePost.objects.filter(author=request.user)
-    paginator = Paginator(article_list,7)
+    paginator = Paginator(article_list,9)
     page = request.GET.get('page')
     try:
         current_page = paginator.page(page)
@@ -107,6 +107,7 @@ def article_list(request):
 def article_detail(request,id,slug):
     article = get_object_or_404(ArticlePost,id=id,slug=slug)
     return render(request,'article/column/article_detail.html',{'article':article})
+
 
 # 删除文章的提示
 @login_required(login_url='/account/login')

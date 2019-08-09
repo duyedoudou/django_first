@@ -2,35 +2,38 @@
 
 {% load staticfiles %}
 
-{% block title %} article detail{% endblock %}
+{% block title %} {{ article.title }}{% endblock %}
 
 {% block content %}
 
 {% with total_likes=article.users_like.count  user_like=article.users_like.all %}
     <div class="container">
     <div class="col-md-9">
-        <header>
-        <h1>{{ article.title }}</h1>
-        <P>
-            <a href="{% url 'article:author_articles' article.author.username %}"><p>{{ article.author.username }}</p></a>
+        <header >
+        <h1 class="text-center">{{ article.title }}</h1>
+        <P >
+            <p class="text-center">作者：<a href="{% url 'article:author_articles' article.author.username %}">{{ article.author.username }}</a></p>
+            <div class="text-right">
             <span style="margin-left: 20px" class="glyphicon glyphicon-thumbs-up">
                 {{ total_likes }} like{{ total_likes | pluralize }}
             </span>
             <span style="margin-left: 20px">
                 {{ total_views }} view{{ total_views | pluralize }}
             </span>
+            </div>
 
         </P>
         </header>
 
         <link rel="stylesheet" href="{% static 'editor/css/editormd.preview.css' %}" />
+
         <div id="editormd-view">
         <textarea id="append-test" style="display:none";>
 {{ article.body }}
         </textarea>
         </div>
 
-            <div>
+        <div>
             <p class="text-center">
                 <a onclick="like_article({{ article.id }},'like')" href="#">
                     <span class="glyphicon glyphicon-thumbs-up">like</span>
@@ -46,7 +49,7 @@
             {% for user in article.users_like.all %}
             <p class="text-center">{{ user.username }}</p>
             {% empty %}
-            <p class="text-center">还没人对此文章表态</p>
+            <p class="text-center">还没人对此文章点赞or鄙视</p>
             {% endfor %}
         </div>
 
@@ -62,14 +65,18 @@
             <p>没有评论</p>
             {% endfor %}
 
+
         <h3><span class="glyphicon glyphicon-send"></span>看文章，发评论 </h3>
         <form action="." method="post" class="form-horizontal" role="form">
             {% csrf_token %}
+
+            {% if user.is_authenticated %}  <!--前端增加判断逻辑-->
+
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">评论员</label>
-                <div class="col-sm-10">
-{#                    {{ request.user }}#}
+                <div class="col-sm-10" >
                     {{ comment_form.commentator }}
+{#                    {{ user.username }}#}
                 </div>
             </div>
 
@@ -85,6 +92,9 @@
                     <p><input type="submit" name="" value="发评论" class="btn btn-primary" </p>
                 </div>
             </div>
+            {% else %}
+                <P>请登录在评论</P>
+            {% endif %}
 
         </form>
 
@@ -92,6 +102,9 @@
         </div>
 
     </div>
+
+
+
 
     <div class="col-md-3">
         <p class="text-center"><h3>最受欢迎的文章</h3></p>

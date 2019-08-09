@@ -142,6 +142,7 @@ DEFAULT_FROM_EMAIL = '18451391106@163.com'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
+# 配置redis数据库
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
