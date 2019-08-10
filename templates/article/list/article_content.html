@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
+{% load article_tags %}
 
 {% block title %} {{ article.title }}{% endblock %}
 
@@ -28,9 +29,11 @@
         <link rel="stylesheet" href="{% static 'editor/css/editormd.preview.css' %}" />
 
         <div id="editormd-view">
-        <textarea id="append-test" style="display:none";>
-{{ article.body }}
-        </textarea>
+{#        <textarea id="append-test" style="display:none";>#}
+{#{{ article.body }}#}
+{#        </textarea>#}
+             <!--上述3行代码将用下边的自定义模板选择器替换，实现markdown-->
+            {{ article.body | markdown }}
         </div>
 
         <div>
@@ -55,30 +58,39 @@
 
         <hr>
         <div>
-            <h3><span class="glyphicon glyphicon-bullhorn"></span> 本文有{{ article.comments.all.count }}评论 </h3>
+            <h3><span class="glyphicon glyphicon-bullhorn"></span> 本文有{{ article.comments.all.count }}评论： </h3>
             {% for comment in article.comments.all %}
-            <div>
-                <p><strong>{{ comment.commentator }}</strong>说：</p>
-                <p style="margin-left: 40px;">{{ comment.body }}</p>
-            </div>
+            <ul >
+            <li >
+                <!--下边一行是增加评论人的头像-->
+                <!--下边一行是增加评论人的头像,但是这样写实际上成了文章作者的头像。！-->
+{#                <img src="{{ comment.commentator.userinfo.photo | striptags }}" class="img-circle"  style="width:25px">#}
+                <a href="{% url 'article:author_articles' comment.commentator %}"> <!--点击评论人，跳转到此人的文章列表-->
+                <strong>{{ comment.commentator }}
+                </a>
+                </strong>：{{ comment.body }}
+
+            </li>
+            </ul>
+
             {% empty %}
             <p>没有评论</p>
             {% endfor %}
 
 
-        <h3><span class="glyphicon glyphicon-send"></span>看文章，发评论 </h3>
+        <h3><span class="glyphicon glyphicon-send"></span>我也要发言 </h3>
         <form action="." method="post" class="form-horizontal" role="form">
             {% csrf_token %}
 
             {% if user.is_authenticated %}  <!--前端增加判断逻辑-->
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">评论员</label>
-                <div class="col-sm-10" >
-                    {{ comment_form.commentator }}
+{#            <div class="form-group">#}
+{#                <label for="inputEmail3" class="col-sm-2 control-label">评论员</label>#}
+{#                <div class="col-sm-10" >#}
+{#                    {{ comment_form.commentator }}#}
 {#                    {{ user.username }}#}
-                </div>
-            </div>
+{#                </div>#}
+{#            </div>#}
 
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">评论</label>
@@ -93,7 +105,7 @@
                 </div>
             </div>
             {% else %}
-                <P>请登录在评论</P>
+                <P>请<a href="{% url 'account:user_login' %}?next={% firstof request.path '/' %}">登录</a>在评论</P>  <!--实现登录后跳转回原界面-->
             {% endif %}
 
         </form>
@@ -106,8 +118,9 @@
 
 
 
-    <div class="col-md-3">
-        <p class="text-center"><h3>最受欢迎的文章</h3></p>
+{#    <div class="col-md-3" style="position:fixed ;right:-30px; top:50px;">  <!--固定展示-->#}
+    <div class="col-md-3" style="right:-30px; top:10px;">
+        <p class="text-center"><h3>浏览量最大的文章</h3></p>
         <ol>
             {% for article_rank in most_viewed %}
             <li>
@@ -115,6 +128,24 @@
             </li>
             {% endfor %}
         </ol>
+
+        <hr>   <!--水平线-->
+                <!--使用标签进行最新文章的展示-->
+        <p class="text-center"><h3>最新的文章</h3></p>
+        {% latest_articles 4 %}   <!--记得传参数-->
+
+        <hr>
+                <!--使用标签进行评论最多文章的展示-->
+        <P class="text-center"><h3>热评文章</h3></P>
+        {% most_commented_articles as most_comments %}
+        <ul>
+            {% for article_rank in most_viewed %}
+            <li>
+                <a href="{{ article_rank.get_url_path }}">{{ article_rank.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
     </div>
 
     </div>

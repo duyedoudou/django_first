@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
+{% load article_tags %}
 
 {% block title %}articles{% endblock %}
 
 {% block content %}
     <div class="row text-center vertical-middle-sm col-md-8">
     <h1>阅读是进步的阶梯</h1>
+
     </div>
     <div class="container">
         <div class="col-md-8">
@@ -35,7 +37,8 @@
 
             <div>
             <br>
-                <p>用户名：{{ user.username }}</p>
+                <p>用户名：{{ user2.username }}</p>   <!--改成user2，区分登录用户（user）和展示文章的用户（user2）-->
+                <P>这里共有{% author_total_articles user2 %}篇文章</P>      <!--也要改成user2-->  <!--统计文章数目的标签-->
                 {% if userinfo.company %}
                 <p>公司：{{ userinfo.company }}</p>
                 {% elif userinfo.aboutme %}

@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
+{% load article_tags %}
+
 {% block title %} 文章列表 {% endblock %}
 
 {% block content %}
     <div class="row text-center vertical-middle-sm">
     <h1>情诗是不老的灵丹</h1>
+    <P>这里共有{% total_articles %}篇文章</P>          <!--统计文章数目的标签-->
     </div>
     <div class="container">
         {% for article in articles %}

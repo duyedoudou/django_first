@@ -18,17 +18,17 @@ r = redis.StrictRedis(host=settings.REDIS_HOST,port=settings.REDIS_PORT,db=setti
 # 文章列表
 def article_titles(request,username=None):
     if username:
-        user = User.objects.get(username=username)
-        articles_title = ArticlePost.objects.filter(author=user)
+        user = User.objects.get(username=username)              #
+        articles_title = ArticlePost.objects.filter(author=user) #
         try:
-            userinfo = user.userinfo
+            userinfo = user.userinfo   #
 
         except:
             userinfo = None
     else:
         articles_title = ArticlePost.objects.all()
 
-    paginator = Paginator(articles_title,9)
+    paginator = Paginator(articles_title,5)      # 每页展示5个文章
     page = request.GET.get('page')
     try:
         current_page = paginator.page(page)
@@ -42,7 +42,7 @@ def article_titles(request,username=None):
 
     if username:
         return render(request,'article/list/author_articles.html',
-                      {'articles':articles,'page':current_page,'userinfo':userinfo,'user':user})
+                      {'articles':articles,'page':current_page,'userinfo':userinfo,'user2':user}) #
 
     return render(request,'article/list/article_titles.html',
                   {'articles':articles,'page':current_page})
@@ -68,12 +68,11 @@ def article_detail(request,id,slug):
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.article = article
-            new_comment.commentator = request.user.username         # 想不出来
+            new_comment.commentator = request.user     # 实现当前登录用户作为评论员
             new_comment.save()
 
     else:
         comment_form = CommentForm()
-
 
 
     return render(request,'article/list/article_content.html',

@@ -88,7 +88,7 @@ def article_post(request):
 @login_required(login_url='/account/login')
 def article_list(request):
     article_list = ArticlePost.objects.filter(author=request.user)
-    paginator = Paginator(article_list,9)
+    paginator = Paginator(article_list,5)                   # 每页显示5个文章
     page = request.GET.get('page')
     try:
         current_page = paginator.page(page)
