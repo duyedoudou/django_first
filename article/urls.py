@@ -26,4 +26,7 @@ urlpatterns = [
 
     path ('like-article/',list_views.like_article,name='like_article'),
 
+    path('article-tag/',views.article_tag,name='article_tag'), # 文章标签的path
+    path('del-article-tag/',views.del_article_tag,name='del_article_tag'),
+
 ]

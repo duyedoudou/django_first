@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import ArticleColumn,ArticlePost,Comment
+from .models import ArticleColumn,ArticlePost,Comment,ArticleTag
 
 class ArticleColumnForm(forms.ModelForm):
     class Meta:
@@ -18,3 +18,9 @@ class CommentForm(forms.ModelForm):
         model = Comment
         # fields = ('commentator','body')
         fields = ('body',)
+
+# 文章标签
+class ArticleTagFrom(forms.ModelForm):
+    class Meta:
+        model = ArticleTag
+        fields = ('tag',)

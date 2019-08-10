@@ -4,8 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 
-from .models import ArticleColumn,ArticlePost
-from .forms import ArticleColumnForm,ArticlePostForm
+from .models import ArticleColumn,ArticlePost,ArticleTag
+from .forms import ArticleColumnForm,ArticlePostForm,ArticleTagFrom
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 
@@ -149,3 +149,39 @@ def redit_article(request,article_id):
         except:
             return HttpResponse('2')
 
+# 添加文章标签
+@login_required(login_url='/account/login')
+@csrf_exempt
+def article_tag(request):
+    if request.method == 'GET':
+        article_tags = ArticleTag.objects.filter(author=request.user)
+        article_tag_form = ArticleTagFrom()
+        return render(request,'article/tag/tag_list.html',
+                      {'article_tags':article_tags,
+                       'article_tag_form':article_tag_form})
+
+    if request.method == 'POST':
+        tag_post_form =  ArticleTagFrom(data=request.POST)
+        if tag_post_form.is_valid():
+            try:
+                new_tag = tag_post_form.save(commit=False)
+                new_tag.author = request.user
+                new_tag.save()
+                return HttpResponse('1')
+            except:
+                return HttpResponse('提交的数据不能存储')
+        else:
+            return HttpResponse('提交违法！！')
+
+# 删除文章标签
+@login_required(login_url='/account/login')
+@require_POST
+@csrf_exempt
+def del_article_tag(request):
+    tag_id = require_POST['tag_id']
+    try:
+        tag = ArticleTag.objects.get(id=tag_id)
+        tag.delete()
+        return HttpResponse('1')
+    except:
+        return HttpResponse('2')
