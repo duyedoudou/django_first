@@ -8,6 +8,7 @@ from .models import ArticleColumn,ArticlePost,ArticleTag
 from .forms import ArticleColumnForm,ArticlePostForm,ArticleTagFrom
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
+import json
 
 # 增加栏目
 @login_required(login_url='/account/login/')
@@ -71,6 +72,12 @@ def article_post(request):
                 new_article.author = request.user
                 new_article.column = request.user.article_column.get(id=request.POST['column_id'])
                 new_article.save()
+                tags = request.POST['tags']
+                if tags:
+                    for atag in json.loads(tags):
+                        tag = request.user.tag.get(tag=atag)
+                        new_article.article_tag.add(tag)
+
                 return HttpResponse('1')
             except:
                 return HttpResponse('2')
@@ -79,9 +86,11 @@ def article_post(request):
     else:
         article_post_form = ArticlePostForm()
         article_columns = request.user.article_column.all()
+        article_tags = request.user.tag.all()    # 文章标签
         return render(request,'article/column/article_post.html',
                       {'article_post_form':article_post_form,
-                       'article_columns':article_columns})
+                       'article_columns':article_columns,
+                       'article_tags':article_tags})
 
 
 # 文章标题列表
@@ -131,20 +140,29 @@ def redit_article(request,article_id):
         article = ArticlePost.objects.get(id=article_id)
         this_article_form = ArticlePostForm(initial={'title':article.title})
         this_article_column = article.column
+        article_tags = request.user.tag.all()  # 文章标签
         return render(request,'article/column/redit_article.html',
                       {
                           'article':article,
                           'article_columns':article_columns,
                           'this_article_column':this_article_column,
-                          'this_article_form':this_article_form
+                          'this_article_form':this_article_form,
+                          'article_tags':article_tags,   # 文章标签
                       })
-    else:
+
+    if request.method == 'POST':
         redit_article = ArticlePost.objects.get(id=article_id)
         try:
             redit_article.column = request.user.article_column.get(id=request.POST['column_id'])
             redit_article.title = request.POST['title']
             redit_article.body = request.POST['body']
             redit_article.save()
+            tags = request.POST['tags']                 # 文章标签
+            if tags:
+                for atag in json.loads(tags):
+                    tag = request.user.tag.get(tag=atag)
+                    redit_article.article_tag.add(tag)
+
             return HttpResponse('1')
         except:
             return HttpResponse('2')
@@ -178,10 +196,10 @@ def article_tag(request):
 @require_POST
 @csrf_exempt
 def del_article_tag(request):
-    tag_id = require_POST['tag_id']
+    tag_id = request.POST['tag_id']
     try:
         tag = ArticleTag.objects.get(id=tag_id)
         tag.delete()
-        return HttpResponse('1')
+        return HttpResponse("1")
     except:
-        return HttpResponse('2')
+        return HttpResponse("2")
