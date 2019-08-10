@@ -68,6 +68,7 @@ class Comment(models.Model):
     article = models.ForeignKey(ArticlePost,on_delete=models.CASCADE,related_name='comments')
     body = models.TextField()
     commentator = models.CharField(max_length=90)
+    image = models.ImageField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

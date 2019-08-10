@@ -70,7 +70,8 @@ def article_detail(request,id,slug):
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.article = article
-            new_comment.commentator = request.user     # 实现当前登录用户作为评论员
+            new_comment.commentator = request.user     # 实现当前登录用户作为评论员名字
+            new_comment.image = request.user.userinfo.photo   # 当前登录用户头像作为评论员头像
             new_comment.save()
 
     else:

@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'account',
     'article',
     'course',
+    'image',
+
 ]
 
 MIDDLEWARE = [

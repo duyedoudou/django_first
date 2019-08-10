@@ -68,7 +68,7 @@
             <li >
                 <!--下边一行是增加评论人的头像-->
                 <!--下边一行是增加评论人的头像,但是这样写实际上成了文章作者的头像。！-->
-{#                <img src="{{ comment.commentator.userinfo.photo | striptags }}" class="img-circle"  style="width:25px">#}
+                <img src="{{ comment.image | striptags }}" class="img-circle"  style="width:25px">
                 <a href="{% url 'article:author_articles' comment.commentator %}"> <!--点击评论人，跳转到此人的文章列表-->
                 <strong>{{ comment.commentator }}
                 </a>

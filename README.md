@@ -26,7 +26,18 @@ article_tags_ids
 similar_articles = ArticlePost.objects.filter(article_tag__in=article_tags_ids).exclude(id=article.id)
 similar_articles
 <QuerySet [<ArticlePost: 码农翻身>, <ArticlePost: 码农翻身>, <ArticlePost: 土匪>, <ArticlePost: 我爱大米饭>]>
+
 ```
+
+```python
+## 大坑！！！
+similar_articles = similar_articles.annotate(same_tags=Count('article_tag'))
+# 上面这行代码，实际是Count各个对象的个数，与括号内的参数无关，只需要是对象的属性就行
+similar_articles = similar_articles.annotate(same_tags=Count('body'))
+# 即这两句是一个意思
+```
+
+
 
 ------
 
