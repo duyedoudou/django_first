@@ -150,6 +150,15 @@
             {% endfor %}
         </ul>
 
+        <hr>
+        <P class="text-center"><h3>相似文章</h3></P>
+        {% for similar in similar_articles %}
+        <p><a href="{{ similar.get_url_path }}">{{ similar.title }}</a></p>
+        {% empty %}
+        <p>没有相似文章</p>
+        {% endfor %}
+
+
     </div>
 
     </div>

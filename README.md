@@ -3,7 +3,36 @@
 
 启动：python manage.py runserver
 
-认知误区：写在path里的url不一定非得出现在浏览器的地址栏里，对于弹窗也可能调用这个url。因此说，这个url是一个引线，引出要执行的函数，继而进行下一步操作，（如render返回一个网页，或者返回一个Httpresponse）。
+##### 认知误区1：
+
+写在path里的url不一定非得出现在浏览器的地址栏里，对于弹窗也可能调用这个url。因此说，这个url是一个引线，引出要执行的函数，继而进行下一步操作，（如render返回一个网页，或者返回一个Httpresponse）。
+
+##### 认知误区2：
+
+书p205
+
+下边代码中的前提是，该article有3个标签，标签id是4，7，8
+
+执行.filter()和exclude（）后，生成的similar_articles是一个QuerySet列表，其中**并不是简单地**筛选出和该article标签相同的文章，而是有几个相同标签，就存放几次。
+
+如`码农翻身`这个文章有两个标签和该article相同，就出现了两次。
+
+> 再此也显示了shell交互模式验证的方便和重要性。
+
+```python
+article_tags_ids = article.article_tag.values_list('id',flat=True)
+article_tags_ids
+<QuerySet [4, 7, 8]>
+similar_articles = ArticlePost.objects.filter(article_tag__in=article_tags_ids).exclude(id=article.id)
+similar_articles
+<QuerySet [<ArticlePost: 码农翻身>, <ArticlePost: 码农翻身>, <ArticlePost: 土匪>, <ArticlePost: 我爱大米饭>]>
+```
+
+------
+
+------
+
+
 
 ### 远程部署记录：
 

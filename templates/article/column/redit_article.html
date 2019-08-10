@@ -38,7 +38,7 @@
             <div class="col-md-10 text-left">
                 {% for tag in article_tags %}
                 <label class="checkbox-inline">
-                    <input class="tagcheckbox" type="checkbox" id="{{ tag.id }}" name="article_tag" value="{{ tag.tag }}"> {{ tag.tag }}
+                    <input  class="tagcheckbox" type="checkbox" id="{{ tag.id }}" name="article_tag" value="{{ tag.tag }}"> {{ tag.tag }}
                 </label>
                 {% empty %}
                 <p>You have not type tags for articles. Please <a href="{% url 'article:article_tag' %}">input your tags</a></p>
