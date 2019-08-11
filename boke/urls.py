@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.views.generic import TemplateView
-from django.conf import settings
+from django.views.static import serve
+
+# from django.conf import settings
+from . import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -24,13 +27,15 @@ urlpatterns = [
     path('blog/', include('blog.urls',namespace='blog')),
     path('account/',include('account.urls',namespace='account')),
     # path('account/',include(('account.urls','account'),namespace='account')),
-   # path('account/',include('account.urls',namespace='account')),
+    # path('account/',include('account.urls',namespace='account')),
     path('article/',include('article.urls',namespace='article')),
     # path('article/',include(('article.urls','article'),namespace='article')),
 
     path('home/', TemplateView.as_view(template_name='home.html'), name='home'),
     path('course/', include('course.urls', namespace='course')),
-    path('image/',include('image.urls',namespace='image')),
+    path('image/',include('image.urls', namespace='image')),
+
+    # path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
