@@ -31,11 +31,14 @@ urlpatterns = [
     path('article/',include('article.urls',namespace='article')),
     # path('article/',include(('article.urls','article'),namespace='article')),
 
-    path('home/', TemplateView.as_view(template_name='home.html'), name='home'),
+    # path('home/', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('course/', include('course.urls', namespace='course')),
     path('image/',include('image.urls', namespace='image')),
+    path('pdf/',include('pdf.urls',namespace='pdf')),
 
     # path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

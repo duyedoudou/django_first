@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'course',
     'image',
     'sorl.thumbnail',
+    'pdf',
 
 ]
 

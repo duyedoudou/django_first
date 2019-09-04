@@ -22,6 +22,22 @@
             <li><a href="{% url 'course:about' %}">关于本站</a> </li>
             <li><a href="https://github.com/duyedoudou">访问github</a> </li>   <!--github的链接从图片转到这里-->
 {#            <li><a href="{% url 'course:course_list' %}">课程</a> </li>#}
+
+{#            <li><a href="{% url 'pdf:pdf_single_page_extract' %}">处理PDF文件</a> </li>#}
+            <li><a href="">|</a> </li>
+            <li>
+                <div class="dropdown" style="margin-top:8px">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu"  data-toggle="dropdown">处理PDF文件
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'pdf:pdf_single_page_extract' %}">拆成单页文件</a> </li>
+                        <li><a href="{% url 'pdf:pdf_range_page_extract' %}">提取连续页文件</a> </li>
+                        <li><a href="{% url 'pdf:pdf_merge' %}">合并文件</a></li>
+                    </ul>
+                </div>
+            </li>
+
         </ul>
         <ul class="nav navbar-nav navbar-right" style="margin-right:10px">
             {% if user.is_authenticated %}
